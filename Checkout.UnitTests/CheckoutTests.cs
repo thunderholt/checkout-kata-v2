@@ -16,6 +16,7 @@ namespace Checkout.UnitTests
         [TestMethod]
         [DataRow("A", 40)] // Calc: 1 x £40 = £40
         [DataRow("AA", 80)] // Calc: 2 x £40 = £80
+        [DataRow("B", 50)] // Calc: 1 x £50 = £50
         public void Checkout_WhenProductsAreScanned_TheTotalPriceIsCorrect(string skuList, int expectedGrandTotal)
         {
             foreach (char sku in skuList)
