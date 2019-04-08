@@ -6,7 +6,7 @@
 
         public void Scan(string sku)
         {
-            this.grandTotal = 40;
+            this.grandTotal += 40;
         }
 
         public decimal GetTotalPrice()
