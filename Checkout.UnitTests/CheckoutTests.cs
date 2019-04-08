@@ -14,11 +14,16 @@ namespace Checkout.UnitTests
         }
 
         [TestMethod]
-        public void Checkout_WhenProductAIsScanned_TheTotalPriceIs40()
+        [DataRow("A", 40)] // Calc: 1 x £40 = £40
+        [DataRow("AA", 80)] // Calc: 2 x £40 = £80
+        public void Checkout_WhenProductsAreScanned_TheTotalPriceIsCorrect(string skuList, int expectedGrandTotal)
         {
-            checkout.Scan("A");
+            foreach (char sku in skuList)
+            {
+                checkout.Scan(sku.ToString());
+            }
 
-            Assert.AreEqual(40, this.checkout.GetTotalPrice());
+            Assert.AreEqual(expectedGrandTotal, this.checkout.GetTotalPrice());
         }
     }
 }
