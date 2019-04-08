@@ -20,6 +20,12 @@
 
         public void Scan(string sku)
         {
+            var product = this.productRepository.GetProduct(sku);
+            if (product == null)
+            {
+                throw new ProductNotFoundException();
+            }
+
             this.basket.AddItem(sku);
         }
 
