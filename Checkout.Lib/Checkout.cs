@@ -11,7 +11,14 @@
 
         public void Scan(string sku)
         {
-            this.grandTotal += 40;
+            if (sku == "A")
+            {
+                this.grandTotal += 40;
+            }
+            else if (sku == "B")
+            {
+                this.grandTotal += 50;
+            }
         }
 
         public decimal GetTotalPrice()
