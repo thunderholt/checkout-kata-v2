@@ -2,14 +2,14 @@
 {
     public class Checkout
     {
-        private int grandTotal = 0;
+        private decimal grandTotal = 0;
 
         public void Scan(string sku)
         {
             this.grandTotal = 40;
         }
 
-        public int GetTotalPrice()
+        public decimal GetTotalPrice()
         {
             return this.grandTotal;
         }
