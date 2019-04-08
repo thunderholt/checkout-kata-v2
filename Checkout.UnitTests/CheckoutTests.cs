@@ -12,5 +12,13 @@ namespace Checkout.UnitTests
         {
             Assert.AreEqual(0, this.checkout.GetTotalPrice());
         }
+
+        [TestMethod]
+        public void Checkout_WhenProductAIsScanned_TheTotalPriceIs40()
+        {
+            checkout.Scan("A");
+
+            Assert.AreEqual(40, this.checkout.GetTotalPrice());
+        }
     }
 }
