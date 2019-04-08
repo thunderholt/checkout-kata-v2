@@ -5,7 +5,26 @@ namespace Checkout.UnitTests
     [TestClass]
     public class CheckoutTests
     {
-        private Checkout checkout = new Checkout();
+        private IProductRepository productRepository = new ProductRepository();
+        private Checkout checkout = null;
+
+        [TestInitialize]
+        public void Init()
+        {
+            this.productRepository.AddProduct(new Product
+            {
+                Sku = "A",
+                UnitPrice = 40
+            });
+
+            this.productRepository.AddProduct(new Product
+            {
+                Sku = "B",
+                UnitPrice = 50
+            });
+
+            this.checkout = new Checkout(this.productRepository);
+        }
 
         [TestMethod]
         public void Checkout_WhenNothingIsScanned_TheTotalPriceIsZero()
@@ -21,7 +40,7 @@ namespace Checkout.UnitTests
         {
             foreach (char sku in skuList)
             {
-                checkout.Scan(sku);
+                this.checkout.Scan(sku);
             }
 
             Assert.AreEqual(expectedGrandTotal, this.checkout.GetTotalPrice());

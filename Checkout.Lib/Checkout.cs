@@ -2,7 +2,13 @@
 {
     public class Checkout
     {
+        private IProductRepository productRepository = null;
         private decimal grandTotal = 0;
+
+        public Checkout(IProductRepository productRepository)
+        {
+            this.productRepository = productRepository;
+        }
 
         public void Scan(char sku)
         {
@@ -11,14 +17,9 @@
 
         public void Scan(string sku)
         {
-            if (sku == "A")
-            {
-                this.grandTotal += 40;
-            }
-            else if (sku == "B")
-            {
-                this.grandTotal += 50;
-            }
+            var product = this.productRepository.GetProduct(sku);
+
+            this.grandTotal += product.UnitPrice;
         }
 
         public decimal GetTotalPrice()
