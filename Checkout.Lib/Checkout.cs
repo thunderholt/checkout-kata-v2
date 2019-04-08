@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Checkout
+﻿namespace Checkout
 {
     public class Checkout
     {
         private IProductRepository productRepository = null;
-        private List<BasketItem> basketItems = new List<BasketItem>();
+        private IBasket basket = null;
 
-        public Checkout(IProductRepository productRepository)
+        public Checkout(IProductRepository productRepository, IBasket basket)
         {
             this.productRepository = productRepository;
+            this.basket = basket;
         }
 
         public void Scan(char sku)
@@ -20,36 +18,19 @@ namespace Checkout
 
         public void Scan(string sku)
         {
-            var basketItem = this.CoalesceBasketItem(sku);
-            basketItem.Quantity++;
+            this.basket.AddItem(sku);
         }
 
         public decimal GetTotalPrice()
         {
             decimal grandTotal = 0;
 
-            foreach (var basketItem in this.basketItems)
+            foreach (var basketItem in this.basket.Items)
             {
                 grandTotal += this.CalculateBasketItemPrice(basketItem);
             }
 
             return grandTotal;
-        }
-
-        private BasketItem CoalesceBasketItem(string sku)
-        {
-            var item = this.basketItems.FirstOrDefault(i => i.Sku == sku);
-            if (item == null)
-            {
-                item = new BasketItem
-                {
-                    Sku = sku
-                };
-
-                this.basketItems.Add(item);
-            }
-
-            return item;
         }
 
         private decimal CalculateBasketItemPrice(BasketItem basketItem)
@@ -68,12 +49,6 @@ namespace Checkout
             }
 
             return basketItemPrice;
-        }
-
-        private class BasketItem
-        {
-            public string Sku { get; set; }
-            public int Quantity { get; set; }
         }
     }
 }

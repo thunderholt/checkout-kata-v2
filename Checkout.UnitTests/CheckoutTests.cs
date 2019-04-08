@@ -6,6 +6,7 @@ namespace Checkout.UnitTests
     public class CheckoutTests
     {
         private IProductRepository productRepository = new ProductRepository();
+        private IBasket basket = new Basket();
         private Checkout checkout = null;
 
         [TestInitialize]
@@ -25,7 +26,7 @@ namespace Checkout.UnitTests
                 UnitPrice = 50
             });
 
-            this.checkout = new Checkout(this.productRepository);
+            this.checkout = new Checkout(this.productRepository, this.basket);
         }
 
         [TestMethod]
