@@ -4,11 +4,13 @@
     {
         private IProductRepository productRepository = null;
         private IBasket basket = null;
+        private IProductPriceCalculator productPriceCalculator = null;
 
-        public Checkout(IProductRepository productRepository, IBasket basket)
+        public Checkout(IProductRepository productRepository, IBasket basket, IProductPriceCalculator productPriceCalculator)
         {
             this.productRepository = productRepository;
             this.basket = basket;
+            this.productPriceCalculator = productPriceCalculator;
         }
 
         public void Scan(char sku)
@@ -27,31 +29,11 @@
 
             foreach (var basketItem in this.basket.Items)
             {
-                grandTotal += this.CalculateBasketItemPrice(basketItem);
+                var product = this.productRepository.GetProduct(basketItem.Sku);
+                grandTotal += this.productPriceCalculator.CalculateProductPrice(product, basketItem.Quantity);
             }
 
             return grandTotal;
-        }
-
-        private decimal CalculateBasketItemPrice(BasketItem basketItem)
-        {
-            decimal basketItemPrice = 0;
-
-            var product = this.productRepository.GetProduct(basketItem.Sku);
-
-            if (basketItem.Quantity >= product.BundleQuantity)
-            {
-                basketItemPrice = product.BundlePrice;
-
-                int remainder = basketItem.Quantity - product.BundleQuantity;
-                basketItemPrice += product.UnitPrice * remainder;
-            }
-            else
-            {
-                basketItemPrice = product.UnitPrice * basketItem.Quantity;
-            }
-
-            return basketItemPrice;
         }
     }
 }

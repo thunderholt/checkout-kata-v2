@@ -13,4 +13,9 @@ namespace Checkout
         IReadOnlyCollection<BasketItem> Items { get; }
         void AddItem(string sku);
     }
+
+    public interface IProductPriceCalculator
+    {
+        decimal CalculateProductPrice(Product product, int quantity);
+    }
 }
