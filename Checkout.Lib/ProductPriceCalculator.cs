@@ -1,4 +1,6 @@
-﻿namespace Checkout
+﻿using System;
+
+namespace Checkout
 {
     public class ProductPriceCalculator : IProductPriceCalculator
     {
@@ -6,17 +8,18 @@
         {
             decimal productPrice = 0;
 
-            if (quantity >= product.BundleQuantity)
-            {
-                productPrice = product.BundlePrice;
+            int bundleCount = 0;
+            int remainder = quantity;
 
-                int remainder = quantity - product.BundleQuantity;
-                productPrice += product.UnitPrice * remainder;
-            }
-            else
+            if (product.BundleQuantity > 0)
             {
-                productPrice = product.UnitPrice * quantity;
+                bundleCount = (int)Math.Floor(quantity / (float)product.BundleQuantity);
+                remainder = quantity - bundleCount * product.BundleQuantity;
             }
+
+            productPrice = 
+                product.BundlePrice * bundleCount +
+                product.UnitPrice * remainder;
 
             return productPrice;
         }
