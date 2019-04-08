@@ -14,7 +14,9 @@ namespace Checkout.UnitTests
             this.productRepository.AddProduct(new Product
             {
                 Sku = "A",
-                UnitPrice = 40
+                UnitPrice = 40,
+                BundleQuantity = 3,
+                BundlePrice = 110
             });
 
             this.productRepository.AddProduct(new Product
