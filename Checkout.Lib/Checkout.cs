@@ -23,7 +23,7 @@
             var product = this.productRepository.GetProduct(sku);
             if (product == null)
             {
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(sku);
             }
 
             this.basket.AddItem(sku);
