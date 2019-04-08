@@ -39,9 +39,12 @@
 
             var product = this.productRepository.GetProduct(basketItem.Sku);
 
-            if (basketItem.Quantity == product.BundleQuantity)
+            if (basketItem.Quantity >= product.BundleQuantity)
             {
                 basketItemPrice = product.BundlePrice;
+
+                int remainder = basketItem.Quantity - product.BundleQuantity;
+                basketItemPrice += product.UnitPrice * remainder;
             }
             else
             {
