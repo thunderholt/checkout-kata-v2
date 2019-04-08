@@ -13,4 +13,12 @@ namespace Checkout.UnitTests
             Assert.AreEqual(0, this.checkout.GetTotalPrice());
         }
     }
+
+    class Checkout
+    {
+        public int GetTotalPrice()
+        {
+            return 0;
+        }
+    }
 }
