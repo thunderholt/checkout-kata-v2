@@ -52,5 +52,12 @@ namespace Checkout.UnitTests
 
             Assert.AreEqual(expectedGrandTotal, this.checkout.GetTotalPrice());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductNotFoundException))]
+        public void Checkout_WhenAnUnrecognisedSkuIsScanned_AProductNotFoundExceptionIsThrown()
+        {
+            this.checkout.Scan("F");
+        }
     }
 }
