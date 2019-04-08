@@ -13,8 +13,7 @@ namespace Checkout
 
             if (product.BundleQuantity > 0)
             {
-                bundleCount = (int)Math.Floor(quantity / (float)product.BundleQuantity);
-                remainder = quantity - bundleCount * product.BundleQuantity;
+                bundleCount = Math.DivRem(quantity, product.BundleQuantity, out remainder);
             }
 
             productPrice = 
