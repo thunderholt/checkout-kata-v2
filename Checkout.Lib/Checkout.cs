@@ -4,6 +4,11 @@
     {
         private decimal grandTotal = 0;
 
+        public void Scan(char sku)
+        {
+            this.Scan(sku.ToString());
+        }
+
         public void Scan(string sku)
         {
             this.grandTotal += 40;

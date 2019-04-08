@@ -20,7 +20,7 @@ namespace Checkout.UnitTests
         {
             foreach (char sku in skuList)
             {
-                checkout.Scan(sku.ToString());
+                checkout.Scan(sku);
             }
 
             Assert.AreEqual(expectedGrandTotal, this.checkout.GetTotalPrice());
